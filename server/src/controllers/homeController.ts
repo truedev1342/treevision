@@ -10,7 +10,7 @@ export async function getEmail(req: Request, res: Response, next: NextFunction) 
             password: 'Dulong@1012',
             host: 'imap.gmail.com',
             port: 993,
-            tls: true,
+            tls: false,
         };
 
         const imap = new Imap(imapConfig);
