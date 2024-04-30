@@ -1,0 +1,7 @@
+server/node_modules
+server/dist
+server/public/uploads
+server/.env
+frontend/node_modules
+frontend/dist
+.idea
