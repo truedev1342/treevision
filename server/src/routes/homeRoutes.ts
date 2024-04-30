@@ -1,8 +1,8 @@
 import express from 'express';
-const router = express.Router();
+import * as homeController from '../controllers';
 
-router.get('/', (req, res) => {
-    res.send('Hello from Example Route');
-});
+const homeRouter = express.Router();
 
-export default router;
+homeRouter.get('/', homeController.getEmail);
+
+export default homeRouter;
