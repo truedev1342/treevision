@@ -22,13 +22,28 @@ export async function getEmail(req: Request, res: Response, next: NextFunction) 
                 return;
               }
               const f = imap.fetch(results, { bodies: '' });
-              res.status(200).send(f);
-              
+              const messages: any[] = [];
+              f.on('message', (msg) => {
+                // Collect messages
+                msg.on('body', (stream, info) => {
+                    let buffer = '';
+                    stream.on('data', (chunk) => buffer += chunk.toString('utf8'));
+                    stream.once('end', () => {
+                        messages.push(buffer);
+                    });
+                });
+                });
+                f.once('end', () => {
+                    // Send collected messages
+                    res.status(200).send(messages);
+                    imap.end(); // Close the connection
+                });
             });
           });
         });
         imap.once('error', (err: any) => {
           console.log(err);
+          res.status(400).send();
         });
         imap.once('end', () => {
           console.log('Connection ended');
