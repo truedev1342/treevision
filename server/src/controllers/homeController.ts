@@ -34,7 +34,6 @@ export async function getEmail(req: Request, res: Response, next: NextFunction) 
           console.log('Connection ended');
         });
         imap.connect();
-        res.status(200).send("member");
     } catch (error) {
         next(error);
     }
